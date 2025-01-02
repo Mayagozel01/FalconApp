@@ -1,0 +1,74 @@
+.falcon-react-range {
+  height: 2.25rem;
+  display: flex;
+  width: 100%;
+  & .falcon-react-range-track {
+    width: $form-range-track-width;
+    height: $form-range-track-height;
+    border: none;
+    align-self: center;
+    box-shadow: $box-shadow-inset;
+    border-radius: 3px;
+  }
+
+  & .falcon-react-range-thumb {
+    width: 16px;
+    height: 24px;
+    background: $white;
+    border: 1px solid $white;
+    border-radius: $border-radius-sm;
+    box-shadow: $btn-falcon-box-shadow;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:active {
+      box-shadow: var(--#{$prefix}btn-falcon-hover-box-shadow);
+    }
+
+    &::after {
+      margin-left: 5px;
+    }
+    &::before {
+      margin-right: 5px;
+    }
+    &::after,
+    &::before {
+      position: absolute;
+      content: '';
+      background: $gray-300;
+      height: 10px;
+      width: 1px;
+    }
+
+    &:hover {
+      background: $gray-100;
+    }
+
+    &:hover .falcon-react-range-tooltip {
+      display: block;
+    }
+
+    & .falcon-react-range-tooltip {
+      &.show {
+        display: block;
+      }
+      position: absolute;
+      top: -2.313rem;
+      display: none;
+      padding: 5px;
+      background: $card-bg;
+      border: 1px solid $border-color;
+      font-size: $tooltip-font-size;
+      color: $black;
+      font-weight: $font-weight-normal;
+      @include border-radius($tooltip-border-radius);
+
+      .dark & {
+        background: map-get($dark-grays, '200');
+        color: $white;
+      }
+    }
+  }
+}

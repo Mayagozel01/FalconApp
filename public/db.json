@@ -1,0 +1,688 @@
+{
+    "view": "Независимый",
+    "name": "СписокКонтактовСписокКонтактов",
+    "version": "1",
+    "layoutsOrder": [
+      {
+        "name": "РеестрПользователейАккорд",
+        "order": "Главный",
+        "attach": "Левое",
+        "size": "Минимальный",
+        "isShow": true,
+        "isEdit": false,
+        "isActive": false,
+        "title": {
+          "value": "Меню",
+          "shortValue": "Меню",
+          "yaAlice": [
+            "РеестрПользователей",
+            "РеестрПользователейАккорд"
+          ],
+          "filter": "undefined",
+          "search": "undefined"
+        },
+        "handler": {
+          "name": ""
+        },
+        "contextCommands": [],
+        "content": {
+          "structure": {
+            "type": "Свернут",
+            "view": "list",
+            "style": "ТаблицаДерево",
+            "Завершённость": true,
+            "tableName": "Меню",
+            "showHeader": false,
+            "header": [
+              {
+                "id": "0",
+                "title": "Фамилия ",
+                "shortTitle": "",
+                "isShow": false,
+                "parentId": "",
+                "variable": "РеестрПользователейАккорд.Значение",
+                "required": "undefined",
+                "dataType": "string",
+                "options": {},
+                "view": {
+                  "index": [
+                    1,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ],
+            "rows": [
+              {
+                "icon": "",
+                "state": {
+                  "unionRow": true,
+                  "veracity": "",
+                  "isAllowed": true,
+                  "isShow": true,
+                  "isMark": false,
+                  "isActive": true
+                },
+                "id": "0",
+                "index": 0,
+                "parentId": "",
+                "nesting": "",
+                "cells": [
+                  {
+                    "id": "",
+                    "index": {},
+                    "alt": "",
+                    "icon": "",
+                    "state": {
+                      "isAllowed": false,
+                      "veracity": ""
+                    },
+                    "note": "",
+                    "headerId": "0",
+                    "value": "Пользователи",
+                    "units": ""
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "1",
+                "index": 0,
+                "parentId": "0",
+                "state": {
+                  "isActive": true
+                },
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "0",
+                    "value": "Список",
+                    "action": {
+                      "link": "https://Cайт.com/page/Список пользователей"
+                    }
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "2",
+                "index": 1,
+                "parentId": "0",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "0",
+                    "value": "Права",
+                    "action": {
+                      "link": "https://Cайт.com/page/Права пользователей"
+                    }
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "3",
+                "index": 1,
+                "parentId": "",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "0",
+                    "value": "Документы"
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "4",
+                "index": 0,
+                "parentId": "1",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "0",
+                    "value": "Проекты",
+                    "action": {
+                      "link": "https://Cайт.com/page/реестр проекты"
+                    }
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "5",
+                "index": 1,
+                "parentId": "1",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "0",
+                    "value": "Работы",
+                    "action": {
+                      "link": "https://Cайт.com/page/реестр работы"
+                    }
+                  }
+                ],
+                "isNew": true
+              }
+            ]
+          },
+          "buttons": []
+        }
+      },
+      {
+        "name": "РеестрПользователейВидРазрешения",
+        "order": "Второстепенный",
+        "attach": null,
+        "size": "Рекомендуемый",
+        "isShow": true,
+        "isEdit": false,
+        "isActive": false,
+        "title": {
+          "value": "Виды разрешений",
+          "shortValue": "Вид",
+          "yaAlice": [
+            "РеестрПользователей",
+            "РеестрПользователейВидРазрешения"
+          ],
+          "filter": "undefined",
+          "search": "undefined"
+        },
+        "handler": {
+          "name": ""
+        },
+        "contextCommands": [],
+        "content": {
+          "structure": {
+            "type": "Свернут",
+            "view": "list",
+            "style": "ТаблицаДерево",
+            "Завершённость": true,
+            "tableName": "Выды",
+            "showHeader": false,
+            "header": [
+              {
+                "id": "3",
+                "title": "Контакт",
+                "parentId": "",
+                "variable": "РеестрПользователейВидРазрешения.Значение",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                "isShow": false
+              }
+            ],
+            "rows": [
+              {
+                "id": "5",
+                "index": 5,
+                "parentId": "",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "3",
+                    "value": "Разрешен доступ"
+                  }
+                ],
+                "isNew": true,
+                "stat": {
+                  "isActive": true
+                }
+              },
+              {
+                "id": "6",
+                "index": 6,
+                "parentId": "",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "3",
+                    "value": "Заблокированы"
+                  }
+                ],
+                "isNew": true
+              }
+            ]
+          },
+          "buttons": []
+        }
+      },
+      {
+        "name": "СписокКарточкаФизлица",
+        "order": "Второстепенный",
+        "attach": null,
+        "size": "Рекомендуемый",
+        "isShow": true,
+        "isEdit": false,
+        "isActive": true,
+        "title": {
+          "value": "Пользователи",
+          "shortValue": "Пользователи",
+          "yaAlice": [
+            "РеестрПользователей",
+            "СписокКарточкаФизлиц"
+          ],
+          "filter": null,
+          "search": null
+        },
+        "handler": {
+          "name": ""
+        },
+        "contextCommands": [],
+        "content": {
+          "structure": {
+            "type": "Свернут",
+            "view": "table",
+            "style": "",
+            "Завершённость": true,
+            "tableName": "Cписок пользователей",
+            "showHeader": true,
+            "header": [
+              {
+                "id": "3",
+                "title": "Фамилия ",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.Фамилия*",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    1,
+                    1,
+                    1
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "4",
+                "title": "Имя",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.Имя",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    2,
+                    2,
+                    2
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "5",
+                "title": "Отчество",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.Отчество",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    3,
+                    3,
+                    3
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "6",
+                "title": "ИНН",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.ИНН",
+                "required": true,
+                "dataType": "number",
+                "view": {
+                  "index": [
+                    "",
+                    4,
+                    4
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "7",
+                "title": "Режим",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.Режим",
+                "required": false,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    "",
+                    5,
+                    5
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "9",
+                "title": "Документ",
+                "parentId": "8",
+                "variable": "СписокКарточкаФизлица.ЛичДанныеДокумент",
+                "required": false,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    "",
+                    0,
+                    0
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "8",
+                "title": "Личные данные",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.ЛичДанныеДокумент",
+                "required": false,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    "",
+                    7,
+                    7
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "10",
+                "title": "Серия и номер",
+                "parentId": "8",
+                "variable": "СписокКарточкаФизлица.ЛичДанныеСерияНомер",
+                "required": false,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    "",
+                    1,
+                    1
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "11",
+                "title": "Дата выдачи",
+                "parentId": "8",
+                "variable": "СписокКарточкаФизлица.ЛичДанныеДатаВыдачи",
+                "required": false,
+                "dataType": "date",
+                "view": {
+                  "index": [
+                    "",
+                    2,
+                    2
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "13",
+                "title": "Логин",
+                "parentId": "12",
+                "variable": "СписокКарточкаФизлица.Логин*",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "12",
+                "title": "Доступ",
+                "parentId": "",
+                "variable": "СписокКарточкаФизлица.Логин*",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    4,
+                    10,
+                    10
+                  ]
+                },
+                "isShow": false
+              },
+              {
+                "id": "14",
+                "title": "Пароль",
+                "parentId": "12",
+                "variable": "СписокКарточкаФизлица.Пароль*",
+                "required": true,
+                "dataType": "string",
+                "view": {
+                  "index": [
+                    1,
+                    1,
+                    1
+                  ]
+                },
+                "isShow": false
+              }
+            ],
+            "rows": [
+              {
+                "id": "0",
+                "index": 0,
+                "parentId": "",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "3",
+                    "value": "Новенькие"
+                  },
+                  {
+                    "headerId": "4",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "5",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "6",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "7",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "9",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "10",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "11",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "13",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "14",
+                    "value": ""
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "1",
+                "index": 0,
+                "parentId": "0",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "3",
+                    "value": "Иванов"
+                  },
+                  {
+                    "headerId": "4",
+                    "value": "Иван"
+                  },
+                  {
+                    "headerId": "5",
+                    "value": "Иванович"
+                  },
+                  {
+                    "headerId": "6",
+                    "value": "72111111"
+                  },
+                  {
+                    "headerId": "7",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "9",
+                    "value": "Паспорт"
+                  },
+                  {
+                    "headerId": "10",
+                    "value": "72 123"
+                  },
+                  {
+                    "headerId": "11",
+                    "value": "21.12.2024"
+                  },
+                  {
+                    "headerId": "13",
+                    "value": "Иван"
+                  },
+                  {
+                    "headerId": "14",
+                    "value": "1234"
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "2",
+                "index": 1,
+                "parentId": "",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "3",
+                    "value": "Бывалые"
+                  },
+                  null,
+                  {
+                    "headerId": "4",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "5",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "6",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "7",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "9",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "10",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "11",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "13",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "14",
+                    "value": ""
+                  }
+                ],
+                "isNew": true
+              },
+              {
+                "id": "3",
+                "index": 0,
+                "parentId": "2",
+                "nesting": "",
+                "cells": [
+                  {
+                    "headerId": "3",
+                    "value": "Петров"
+                  },
+                  {
+                    "headerId": "4",
+                    "value": "Петр"
+                  },
+                  {
+                    "headerId": "5",
+                    "value": "Пертрович"
+                  },
+                  {
+                    "headerId": "6",
+                    "value": "8611111"
+                  },
+                  {
+                    "headerId": "7",
+                    "value": ""
+                  },
+                  {
+                    "headerId": "9",
+                    "value": "Свидетельство о рождении"
+                  },
+                  {
+                    "headerId": "10",
+                    "value": "82 123"
+                  },
+                  {
+                    "headerId": "11",
+                    "value": "25.12.2024"
+                  },
+                  {
+                    "headerId": "13",
+                    "value": "Петр"
+                  },
+                  {
+                    "headerId": "14",
+                    "value": "5678"
+                  }
+                ],
+                "isNew": true
+              }
+            ]
+          },
+          "buttons": [
+            "Добавить",
+            "Режим выбора"
+          ]
+        }
+      }
+    ]
+  }
