@@ -83,7 +83,7 @@ const NavbarVertical = () => {
 
 
       <PanelGroup direction='horizontal'>
-        <Panel defaultSize={40} minSize={20}>
+        <Panel defaultSize={50} minSize={20}>
       <Navbar.Collapse
         in={showBurgerMenu}
         onMouseEnter={handleMouseEnter}
