@@ -1,38 +1,52 @@
-import React, { useContext, Suspense } from 'react';
-import { LAYOUT_ORDERS } from './constants';
-import { LayersContext } from './LayersProvider';
+import React, { lazy, Suspense } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Resizable } from 'react-resizable';
 import Draggable from 'react-draggable';
 import 'react-resizable/css/styles.css';
+import { updateLayer } from './layersSlice';
 
 const LayerManager = () => {
-  const usersData = useContext(LayersContext);
+  const { layers } = useSelector((state) => state.layers);
+  const dispatch = useDispatch();
 
-  if (!usersData || !usersData.layoutsOrder) {
+  if (!layers || !layers.length) {
     return <div>No layer data available.</div>;
   }
 
-  const sortedLayers = usersData.layoutsOrder
-    .filter(layer => Object.values(LAYOUT_ORDERS).includes(layer.order) && layer.isShow)
-    .sort((a, b) => {
-      const orderPriority = {
-        [LAYOUT_ORDERS.MAIN]: 1,
-        [LAYOUT_ORDERS.SECONDARY]: 2,
-        [LAYOUT_ORDERS.BUTTON]: 3,
-      };
-      return (orderPriority[a.order] || Infinity) - (orderPriority[b.order] || Infinity);
-    });
-
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px' }}> {/* Flex контейнер */}
-      {sortedLayers.map((layer) => {
-        const LayerComponent = React.lazy(() => import(`./components/${layer.name}`));
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px' }}>
+      {layers.map((layer) => {
+        const LayerComponent = lazy(() => import(`./components/${layer.name}`));
 
         return (
-          <Draggable key={layer.name}>
-            <div style={{ width: 'auto', height: 'auto' }}> {/* Убираем absolute */}
-              <Resizable width={200} height={100}>
-                <div style={{ border: '1px solid black', padding: '10px', width: '100%', height: '100%', boxSizing: 'border-box' }}>
+          <Draggable key={layer.id}>
+            <div style={{ display: 'inline-block' }}>
+              <Resizable
+                width={layer.width || 200}
+                height={layer.height || 500}
+                onResize={(event, { size }) => {
+                  if (size.width !== layer.width || size.height !== layer.height) {
+                    console.log(size)
+                    dispatch(
+                      updateLayer({
+                        id: layer.id,
+                        width: size.width,
+                        height: size.height,
+                      })
+                    );
+                  }
+                }}
+                resizeHandles={['s', 'e', 'w', 'n']} // Allow resizing from all sides
+              >
+                <div
+                  style={{
+                    width: `${layer.width || 200}px`,
+                    height: `${layer.height || 500}px`,
+                    border: '1px solid black',
+                    padding: '20px',
+                    boxSizing: 'border-box',
+                  }}
+                >
                   <Suspense fallback={<div>Loading...</div>}>
                     <LayerComponent {...layer} />
                   </Suspense>
