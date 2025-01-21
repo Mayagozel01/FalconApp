@@ -5,6 +5,7 @@ import { addLayer } from '../layersSlice';
 
 
 
+
 const Registry = ({ ...rest }) => {
   // if (!rest.content?.structure?.rows || !rest.content?.structure?.header) {
   //   return <div>No data to display</div>; // Обработка отсутствия данных
@@ -16,7 +17,7 @@ const Registry = ({ ...rest }) => {
     console.log('REgis props:', rest)
   return (
     <div>
-      <h3>{rest.title.value}</h3>
+      <h3>{rest.title.value} Registry</h3>
       {rest.content.structure.view === 'table' && ( // Отображаем таблицу только если view === 'table'
         <table>
           <thead>
@@ -48,6 +49,7 @@ const Registry = ({ ...rest }) => {
             ))}
         </ul>
       )}
+
 <button onClick={handleDuplicate}>Duplicater</button>
     </div>
   );

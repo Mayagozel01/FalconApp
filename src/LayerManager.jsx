@@ -40,7 +40,7 @@ const LayerManager = () => {
               >
                 <div
                   style={{
-                    width: `${layer.width || 200}px`,
+                    width: `${layer.width || 600}px`,
                     height: `${layer.height || 500}px`,
                     border: '1px solid black',
                     padding: '20px',

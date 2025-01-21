@@ -10,7 +10,10 @@ const Permission = ({...rest }) => {
   };
     console.log('Permission props:', rest)
   return (
+
     <div>
+
+
       <h3>{rest.title?.value}</h3>
         {rest.content?.structure.rows?.map((row) => (
         <div key={row.id}>

@@ -5,8 +5,8 @@ const initialState = {
   layers: users.layoutsOrder?.map((layout) => ({
     ...layout,
     id: generateNumericId(),
-    width: layout.width || '200', // Set default width
-    height: layout.height || '350', // Set default height
+    width: layout.width, // Set default width
+    height: layout.height, // Set default height
   })) || [],
   loading: false,
   error: null,
