@@ -23,7 +23,7 @@ const LayerManager = () => {
             <div style={{ display: 'inline-block' }}>
               <Resizable
                 width={layer.width || 200}
-                height={layer.height || 500}
+                height={layer.height || 900}
                 onResize={(event, { size }) => {
                   if (size.width !== layer.width || size.height !== layer.height) {
                     console.log(size)
@@ -40,7 +40,7 @@ const LayerManager = () => {
               >
                 <div
                   style={{
-                    width: `${layer.width || 600}px`,
+                    width: `${layer.width || 200}px`,
                     height: `${layer.height || 500}px`,
                     border: '1px solid black',
                     padding: '20px',

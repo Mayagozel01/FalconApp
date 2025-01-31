@@ -684,205 +684,258 @@ const users= {
                         }
                     ],
                     // Строки
-                    'rows':[
-                        {
+                    
+                    
+                        "rows": [
+                          {
                             "id": "0",
                             "index": 0,
                             "parentId": "",
                             "nesting": "",
                             "cells": [
-                                {
-                                    "headerId": "3",
-                                    "value": "Новенькие"
-                                },
-                                {
-                                    "headerId": "4",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "5",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "6",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "7",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "9",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "10",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "11",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "13",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "14",
-                                    "value": ""
-                                }
+                              { "headerId": "3", "value": "Новенькие" },
+                              { "headerId": "4", "value": "" },
+                              { "headerId": "5", "value": "" },
+                              { "headerId": "6", "value": "" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "" },
+                              { "headerId": "10", "value": "" },
+                              { "headerId": "11", "value": "" },
+                              { "headerId": "13", "value": "" },
+                              { "headerId": "14", "value": "" }
                             ],
                             "isNew": true
-                        },
-                        {
+                          },
+                          {
                             "id": "1",
                             "index": 0,
                             "parentId": "0",
                             "nesting": "",
                             "cells": [
-                                {
-                                    "headerId": "3",
-                                    "value": "Иванов"
-                                },
-                                {
-                                    "headerId": "4",
-                                    "value": "Иван"
-                                },
-                                {
-                                    "headerId": "5",
-                                    "value": "Иванович"
-                                },
-                                {
-                                    "headerId": "6",
-                                    "value": "72111111"
-                                },
-                                {
-                                    "headerId": "7",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "9",
-                                    "value": "Паспорт"
-                                },
-                                {
-                                    "headerId": "10",
-                                    "value": "72 123"
-                                },
-                                {
-                                    "headerId": "11",
-                                    "value": "21.12.2024"
-                                },
-                                {
-                                    "headerId": "13",
-                                    "value": "Иван"
-                                },
-                                {
-                                    "headerId": "14",
-                                    "value": "1234"
-                                }
+                              { "headerId": "3", "value": "Иванов" },
+                              { "headerId": "4", "value": "Иван" },
+                              { "headerId": "5", "value": "Иванович" },
+                              { "headerId": "6", "value": "72111111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Паспорт" },
+                              { "headerId": "10", "value": "72 123" },
+                              { "headerId": "11", "value": "21.12.2024" },
+                              { "headerId": "13", "value": "Иван" },
+                              { "headerId": "14", "value": "1234" }
                             ],
                             "isNew": true
-                        },
-                        {
+                          },
+                          {
                             "id": "2",
                             "index": 1,
                             "parentId": "",
                             "nesting": "",
                             "cells": [
-                                {
-                                    "headerId": "3",
-                                    "value": "Бывалые"
-                                },
-                                ,
-                                {
-                                    "headerId": "4",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "5",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "6",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "7",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "9",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "10",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "11",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "13",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "14",
-                                    "value": ""
-                                }
+                              { "headerId": "3", "value": "Бывалые" },
+                              { "headerId": "4", "value": "" },
+                              { "headerId": "5", "value": "" },
+                              { "headerId": "6", "value": "" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "" },
+                              { "headerId": "10", "value": "" },
+                              { "headerId": "11", "value": "" },
+                              { "headerId": "13", "value": "" },
+                              { "headerId": "14", "value": "" }
                             ],
                             "isNew": true
-                        },
-                        {
+                          },
+                          {
                             "id": "3",
                             "index": 0,
                             "parentId": "2",
                             "nesting": "",
                             "cells": [
-                                {
-                                    "headerId": "3",
-                                    "value": "Петров"
-                                },
-                                {
-                                    "headerId": "4",
-                                    "value": "Петр"
-                                },
-                                {
-                                    "headerId": "5",
-                                    "value": "Пертрович"
-                                },
-                                {
-                                    "headerId": "6",
-                                    "value": "8611111"
-                                },
-                                {
-                                    "headerId": "7",
-                                    "value": ""
-                                },
-                                {
-                                    "headerId": "9",
-                                    "value": "Свидетельство о рождении"
-                                },
-                                {
-                                    "headerId": "10",
-                                    "value": "82 123"
-                                },
-                                {
-                                    "headerId": "11",
-                                    "value": "25.12.2024"
-                                },
-                                {
-                                    "headerId": "13",
-                                    "value": "Петр"
-                                },
-                                {
-                                    "headerId": "14",
-                                    "value": "5678"
-                                }
+                              { "headerId": "3", "value": "Петров" },
+                              { "headerId": "4", "value": "Петр" },
+                              { "headerId": "5", "value": "Пертрович" },
+                              { "headerId": "6", "value": "8611111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "82 123" },
+                              { "headerId": "11", "value": "25.12.2024" },
+                              { "headerId": "13", "value": "Петр" },
+                              { "headerId": "14", "value": "5678" }
                             ],
                             "isNew": true
-                        }
-                    ]    
+                          },
+                          {
+                            "id": "4",
+                            "index": 1,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Сидоров" },
+                              { "headerId": "4", "value": "Сидор" },
+                              { "headerId": "5", "value": "Сидорович" },
+                              { "headerId": "6", "value": "9611111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "92 123" },
+                              { "headerId": "11", "value": "30.12.2024" },
+                              { "headerId": "13", "value": "Сидор" },
+                              { "headerId": "14", "value": "6789" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "5",
+                            "index": 2,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Кузнецов" },
+                              { "headerId": "4", "value": "Кузьма" },
+                              { "headerId": "5", "value": "Кузьмич" },
+                              { "headerId": "6", "value": "1061111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "102 123" },
+                              { "headerId": "11", "value": "15.01.2025" },
+                              { "headerId": "13", "value": "Кузьма" },
+                              { "headerId": "14", "value": "7890" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "6",
+                            "index": 3,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Иванова" },
+                              { "headerId": "4", "value": "Иванна" },
+                              { "headerId": "5", "value": "Ивановна" },
+                              { "headerId": "6", "value": "1161111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "112 123" },
+                              { "headerId": "11", "value": "25.01.2025" },
+                              { "headerId": "13", "value": "Иванна" },
+                              { "headerId": "14", "value": "8910" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "7",
+                            "index": 4,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Смирнов" },
+                              { "headerId": "4", "value": "Смирн" },
+                              { "headerId": "5", "value": "Смирнович" },
+                              { "headerId": "6", "value": "1261111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "122 123" },
+                              { "headerId": "11", "value": "05.02.2025" },
+                              { "headerId": "13", "value": "Смирн" },
+                              { "headerId": "14", "value": "9102" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "8",
+                            "index": 5,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Попов" },
+                              { "headerId": "4", "value": "Поп" },
+                              { "headerId": "5", "value": "Попович" },
+                              { "headerId": "6", "value": "1361111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "132 123" },
+                              { "headerId": "11", "value": "15.02.2025" },
+                              { "headerId": "13", "value": "Поп" },
+                              { "headerId": "14", "value": "10234" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "9",
+                            "index": 6,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Соколов" },
+                              { "headerId": "4", "value": "Сокол" },
+                              { "headerId": "5", "value": "Соколович" },
+                              { "headerId": "6", "value": "1461111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "142 123" },
+                              { "headerId": "11", "value": "25.02.2025" },
+                              { "headerId": "13", "value": "Сокол" },
+                              { "headerId": "14", "value": "2345" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "10",
+                            "index": 7,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Михайлов" },
+                              { "headerId": "4", "value": "Мих" },
+                              { "headerId": "5", "value": "Михайлович" },
+                              { "headerId": "6", "value": "1561111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "152 123" },
+                              { "headerId": "11", "value": "05.03.2025" },
+                              { "headerId": "13", "value": "Мих" },
+                              { "headerId": "14", "value": "3456" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "11",
+                            "index": 8,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Федоров" },
+                              { "headerId": "4", "value": "Фед" },
+                              { "headerId": "5", "value": "Федорович" },
+                              { "headerId": "6", "value": "1661111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "162 123" },
+                              { "headerId": "11", "value": "15.03.2025" },
+                              { "headerId": "13", "value": "Фед" },
+                              { "headerId": "14", "value": "4567" }
+                            ],
+                            "isNew": true
+                          },
+                          {
+                            "id": "12",
+                            "index": 9,
+                            "parentId": "2",
+                            "nesting": "",
+                            "cells": [
+                              { "headerId": "3", "value": "Морозов" },
+                              { "headerId": "4", "value": "Мороз" },
+                              { "headerId": "5", "value": "Морозович" },
+                              { "headerId": "6", "value": "1761111" },
+                              { "headerId": "7", "value": "" },
+                              { "headerId": "9", "value": "Свидетельство о рождении" },
+                              { "headerId": "10", "value": "172 123" },
+                              { "headerId": "11", "value": "25.03.2025" },
+                              { "headerId": "13", "value": "Мороз" },
+                              { "headerId": "14", "value": "5678" }
+                            ],
+                            "isNew": true
+                          }
+                        ]
+                      
                 },
                 // Кнопки слоя
                 'buttons': ['Добавить','Режим выбора']//Array<Button> // Необязательно
