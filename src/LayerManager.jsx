@@ -40,8 +40,8 @@ const LayerManager = () => {
               >
                 <div
                   style={{
-                    width: `${layer.width || 200}px`,
-                    height: `${layer.height || 500}px`,
+                    width: `${layer.width || 900}px`,
+                    height: `${layer.height || 900}px`,
                     border: '1px solid black',
                     padding: '20px',
                     boxSizing: 'border-box',

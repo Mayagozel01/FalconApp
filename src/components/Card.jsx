@@ -1,99 +1,144 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { addLayer } from '../layersSlice';
 import { Table, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
+// Actions component for edit and delete buttons
 const Actions = () => (
   <div className="end-0 top-50 pe-3 translate-middle-y hover-actions">
     <Button variant="light" size="sm" className="border-300 me-1 text-600">
-      <FontAwesomeIcon icon="edit" />
+      <FontAwesomeIcon icon={faEdit} />
     </Button>
     <Button variant="light" size="sm" className="border-300 text-600">
-      <FontAwesomeIcon icon="trash-alt" />
+      <FontAwesomeIcon icon={faTrashAlt} />
     </Button>
   </div>
 );
 
 const groupHeaders = (headers) => {
-  const groups = new Map(); // To store groups by parentId
+  const groups = new Map();
 
   headers.forEach((header) => {
     if (!header.parentId) {
-      // If it's a parent, create or update the group
-      if (!groups.has(header.id)) {
-        // If the group doesn't exist, create a new one
-        groups.set(header.id, { parent: header, children: [] });
-      } else {
-        // If the group exists (with a placeholder parent), update the parent
+      // If the header has no parentId, it's a parent
+      if (groups.has(header.id)) {
+        // If a placeholder group already exists, update the parent
         groups.get(header.id).parent = header;
+      } else {
+        // If no group exists, create a new group with the parent
+        groups.set(header.id, { parent: header, children: [] });
       }
     } else {
-      // If it's a child, find or create the group for its parentId
+      // If the header has a parentId, it's a child
       if (!groups.has(header.parentId)) {
-        // If the group doesn't exist yet, create a placeholder parent
+        // If the parent group doesn't exist, create a placeholder
         groups.set(header.parentId, { parent: null, children: [] });
       }
-      // Add the child to the group
+      // Add the child to the parent's group
       groups.get(header.parentId).children.push(header);
     }
   });
-  console.log(Array.from(groups.values()))
 
-  // Convert the map to an array of groups
+  // Convert the Map to an array of groups
   return Array.from(groups.values());
 };
+// Helper function to group rows by parentId
+const groupRows = (rows) => {
+  const rowMap = new Map();
+  rows.forEach((row) => rowMap.set(row.id, { ...row, children: [] }));
+  rows.forEach((row) => {
+    if (row.parentId && rowMap.has(row.parentId)) {
+      rowMap.get(row.parentId).children.push(rowMap.get(row.id));
+    }
+  });
+  return Array.from(rowMap.values()).filter((row) => !row.parentId);
+};
 
-const Card = ({ content }) => {
-  const [visibleRows, setVisibleRows] = useState(content.structure.rows.slice(0, 5));
-  const dispatch = useDispatch();
+const ChildRowsVirtualized = ({ children }) => {
+  const parentRef = useRef(null);
 
-  const handleDuplicate = () => {
-    dispatch(addLayer(content));
-  };
-
-  const handleAddRows = () => {
-    setVisibleRows((prevRows) => {
-      const newRows = content.structure.rows.slice(prevRows.length);
-      return [...prevRows, ...newRows.slice(0, Math.min(2, newRows.length))];
-    });
-  };
-
-  const headers = content.structure.header;
-  const groupedHeaders = groupHeaders(headers);
-
-  const rowRenderer = ({ index, style }) => {
-    const row = visibleRows[index];
-    return (
-      <tr key={index} style={style} className="hover-actions-trigger">
-        {row.cells?.map((cell, idx) => (
-          <td key={idx} className="text-center">
-            {cell.value}
-          </td>
-        ))}
-        <td className="w-auto">
-          <Actions />
-        </td>
-      </tr>
-    );
-  };
-
-  useEffect(() => {
-    const intervalId = setInterval(handleAddRows, 2500);
-    return () => clearInterval(intervalId);
-  }, [handleAddRows]);
+  const rowVirtualizer = useVirtualizer({
+    count: children.length, // Number of child rows
+    estimateSize: () => 60, // Estimated height of each row
+    getScrollElement: () => parentRef.current,
+    overscan: 15, // Number of rows to render outside the visible area
+  });
 
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <tr>
+      <td colSpan="100%" className='m-0 p-0 '>
+        <div ref={parentRef} style={{  overflowY: 'auto' }}>
+          <div style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative'  }}
+          className='w-100'>
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const child = children[virtualRow.index];
+              return (
+                <tr
+                  key={child.id}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    transform: `translateY(${virtualRow.start}px)`,
+                    width: '100%',
+                  }}
+                >
+         
+                        {child.cells.map((cell, idx) => (
+                          <td key={idx} style={{ border: '1px solid black' ,
+                          wordWrap: 'break-word', // Ensures the word will break if too long
+                          whiteSpace: 'normal',   // Allows content to wrap and grow vertically
+                        }}
+                          className='childCol p-2'>
+                            {cell.value}
+                          </td>
+                        ))}
+                        <td className="w-auto" style={{ border: '1px solid black' }}>
+                          <Actions />
+                        </td>
+
+                </tr>
+              );
+            })}
+          </div>
+        </div>
+      </td>
+    </tr>
+  );
+};
+
+
+// Main Card component
+const Card = ({ content }) => {
+  const [expandedRows, setExpandedRows] = useState({});
+  const dispatch = useDispatch();
+
+  // Toggle expanded state for a row
+  const toggleExpanded = (rowId) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [rowId]: !prev[rowId],
+    }));
+  };
+
+  // Group headers and rows using useMemo for performance optimization
+  const headers = content.structure.header;
+  const groupedHeaders = useMemo(() => groupHeaders(headers), [headers]);
+  const groupedRows = useMemo(() => groupRows(content.structure.rows), [content.structure.rows]);
+
+  return (
+    <div style={{ width: '100%', height: 'auto' }}>
       <h3>{content.structure.tableName}</h3>
-      <Table hover bordered responsive style={{ border: '1px solid black' }}>
+      <Table hover bordered responsive style={{ border: '1px solid black', width: '100%' }}>
         <thead>
           <tr>
             {groupedHeaders.map((group, index) => (
               <th
                 key={`parent-${index}`}
                 colSpan={group.children.length || 1}
-                className="text-center"
+                className={`text-center m-0 p-0`}
                 style={{ border: '1px solid black' }}
               >
                 {group.parent?.title || 'No Parent'}
@@ -106,7 +151,7 @@ const Card = ({ content }) => {
                 ? group.children.map((child) => (
                     <th
                       key={`child-${child.id}`}
-                      className="text-center"
+                      className="text-center childCol"
                       style={{ border: '1px solid black' }}
                     >
                       {child.title}
@@ -117,15 +162,34 @@ const Card = ({ content }) => {
           </tr>
         </thead>
         <tbody>
-          {visibleRows.map((row, index) => rowRenderer({ index, style: {} }))}
+          {groupedRows.map((row) => (
+            <React.Fragment key={row.id}>
+              {/* Render parent row */}
+              <tr>
+                <td colSpan={groupedHeaders.length} onClick={() => toggleExpanded(row.id)}>
+                  {row.children.length > 0 && (
+                    <FontAwesomeIcon icon={expandedRows[row.id] ? faChevronDown : faChevronRight} />
+                  )}
+                  {row.cells[0].value}
+                </td>
+                <td>
+                  <Actions />
+                </td>
+              </tr>
+
+              {/* Render virtualized child rows if expanded */}
+              {expandedRows[row.id] && <ChildRowsVirtualized children={row.children} />}
+            </React.Fragment>
+          ))}
         </tbody>
       </Table>
 
+      {/* Buttons for duplicating and adding rows */}
       <div className="d-flex justify-content-between mt-2">
-        <button onClick={handleDuplicate} className="btn btn-primary">
+        <button onClick={() => dispatch(addLayer(content))} className="btn btn-primary">
           Duplicate
         </button>
-        <button onClick={handleAddRows} className="btn btn-secondary">
+        <button className="btn btn-secondary">
           Add 2 Rows
         </button>
       </div>
