@@ -23,21 +23,15 @@ const groupHeaders = (headers) => {
 
   headers.forEach((header) => {
     if (!header.parentId) {
-      // If the header has no parentId, it's a parent
       if (groups.has(header.id)) {
-        // If a placeholder group already exists, update the parent
         groups.get(header.id).parent = header;
       } else {
-        // If no group exists, create a new group with the parent
         groups.set(header.id, { parent: header, children: [] });
       }
     } else {
-      // If the header has a parentId, it's a child
       if (!groups.has(header.parentId)) {
-        // If the parent group doesn't exist, create a placeholder
         groups.set(header.parentId, { parent: null, children: [] });
       }
-      // Add the child to the parent's group
       groups.get(header.parentId).children.push(header);
     }
   });
@@ -61,7 +55,7 @@ const ChildRowsVirtualized = ({ children }) => {
   const parentRef = useRef(null);
 
   const rowVirtualizer = useVirtualizer({
-    count: children.length, // Number of child rows
+    count: children.length, 
     estimateSize: () => 60, // Estimated height of each row
     getScrollElement: () => parentRef.current,
     overscan: 15, // Number of rows to render outside the visible area
@@ -88,8 +82,8 @@ const ChildRowsVirtualized = ({ children }) => {
          
                         {child.cells.map((cell, idx) => (
                           <td key={idx} style={{ border: '1px solid black' ,
-                          wordWrap: 'break-word', // Ensures the word will break if too long
-                          whiteSpace: 'normal',   // Allows content to wrap and grow vertically
+                          wordWrap: 'break-word', 
+                          whiteSpace: 'normal',   
                         }}
                           className='childCol p-2'>
                             {cell.value}
@@ -110,7 +104,7 @@ const ChildRowsVirtualized = ({ children }) => {
 };
 
 
-// Main Card component
+
 const Card = ({ content }) => {
   const [expandedRows, setExpandedRows] = useState({});
   const dispatch = useDispatch();
@@ -123,7 +117,6 @@ const Card = ({ content }) => {
     }));
   };
 
-  // Group headers and rows using useMemo for performance optimization
   const headers = content.structure.header;
   const groupedHeaders = useMemo(() => groupHeaders(headers), [headers]);
   const groupedRows = useMemo(() => groupRows(content.structure.rows), [content.structure.rows]);
@@ -131,36 +124,39 @@ const Card = ({ content }) => {
   return (
     <div style={{ width: '100%', height: 'auto' }}>
       <h3>{content.structure.tableName}</h3>
-      <Table hover bordered responsive style={{ border: '1px solid black', width: '100%' }}>
-        <thead>
-          <tr>
-            {groupedHeaders.map((group, index) => (
+      <table hover bordered responsive style={{ border: '1px solid black', width: '100%' }}>
+      <thead>
+  <tr>
+    {groupedHeaders.map((group, index) => (
+      <th
+        key={`parent-${index}`}
+        colSpan={group.children.length || 1}
+        rowSpan={group.children.length === 0 ? 2 : 1} 
+        className={`text-center m-0 p-0`}
+        style={{ border: '1px solid black' }}
+      >
+        {group.parent?.title || 'No Parent'}
+      </th>
+    ))}
+  </tr>
+  {groupedHeaders.some(group => group.children.length > 0) && ( 
+    <tr>
+      {groupedHeaders.map((group) =>
+        group.children.length > 0
+          ? group.children.map((child) => (
               <th
-                key={`parent-${index}`}
-                colSpan={group.children.length || 1}
-                className={`text-center m-0 p-0`}
+                key={`child-${child.id}`}
+                className="text-center childCol"
                 style={{ border: '1px solid black' }}
               >
-                {group.parent?.title || 'No Parent'}
+                {child.title}
               </th>
-            ))}
-          </tr>
-          <tr>
-            {groupedHeaders.map((group) =>
-              group.children.length > 0
-                ? group.children.map((child) => (
-                    <th
-                      key={`child-${child.id}`}
-                      className="text-center childCol"
-                      style={{ border: '1px solid black' }}
-                    >
-                      {child.title}
-                    </th>
-                  ))
-                : <th key={`empty-${group.parent?.id}`} style={{ border: '1px solid black' }}></th>
-            )}
-          </tr>
-        </thead>
+            ))
+          : null 
+      )}
+    </tr>
+  )}
+</thead>
         <tbody>
           {groupedRows.map((row) => (
             <React.Fragment key={row.id}>
@@ -182,9 +178,8 @@ const Card = ({ content }) => {
             </React.Fragment>
           ))}
         </tbody>
-      </Table>
+      </table>
 
-      {/* Buttons for duplicating and adding rows */}
       <div className="d-flex justify-content-between mt-2">
         <button onClick={() => dispatch(addLayer(content))} className="btn btn-primary">
           Duplicate
