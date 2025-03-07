@@ -5,11 +5,10 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 const EditingCellComponent = ({ cellData, headerLabels, layerId, onSave }) => {
   const [editedCells, setEditedCells] = useState(cellData);
 
-  // Handle input changes
+
   const handleInputChange = (index, value) => {
     const updatedCells = editedCells.map((cell, i) => {
       if (i === index) {
-        // Create a new copy of the cell object with the updated value
         return { ...cell, value };
       }
       return cell;
@@ -17,9 +16,8 @@ const EditingCellComponent = ({ cellData, headerLabels, layerId, onSave }) => {
     setEditedCells(updatedCells);
   };
 
-  // Handle save button click
   const handleSave = () => {
-    onSave(editedCells); // Pass updated cells to the parent component
+    onSave(editedCells); 
   };
 
   return (
@@ -51,7 +49,6 @@ const EditingCellComponent = ({ cellData, headerLabels, layerId, onSave }) => {
         </tbody>
       </table>
 
-      {/* Save button */}
       <button
         onClick={handleSave}
         style={{
