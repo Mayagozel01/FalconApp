@@ -22,24 +22,25 @@ const groupHeaders = (headers) => {
   const groups = new Map();
 
   headers.forEach((header) => {
-    if (!header.parentId) {
-      if (groups.has(header.id)) {
-        groups.get(header.id).parent = header;
-      } else {
-        groups.set(header.id, { parent: header, children: [] });
-      }
+    const { id, parentId } = header;
+    
+    if (!parentId) {
+      // Создаем или обновляем группу для родительского заголовка
+      const group = groups.get(id) || { parent: null, children: [] };
+      group.parent = header;
+      groups.set(id, group);
     } else {
-      if (!groups.has(header.parentId)) {
-        groups.set(header.parentId, { parent: null, children: [] });
-      }
-      groups.get(header.parentId).children.push(header);
+      // Создаем или обновляем группу для дочернего заголовка
+      const group = groups.get(parentId) || { parent: null, children: [] };
+      group.children.push(header);
+      groups.set(parentId, group);
     }
   });
 
-  // Convert the Map to an array of groups
   return Array.from(groups.values());
 };
-// Helper function to group rows by parentId
+
+
 const groupRows = (rows) => {
   const rowMap = new Map();
   rows.forEach((row) => rowMap.set(row.id, { ...row, children: [] }));
@@ -51,7 +52,7 @@ const groupRows = (rows) => {
   return Array.from(rowMap.values()).filter((row) => !row.parentId);
 };
 
-const ChildRowsVirtualized = ({ children }) => {
+const ChildRowsVirtualized = ({ children, dispatch, onCellClick }) => {
   const parentRef = useRef(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -64,8 +65,8 @@ const ChildRowsVirtualized = ({ children }) => {
   return (
     <tr>
       <td colSpan="100%" className='m-0 p-0 '>
-        <div ref={parentRef} style={{  overflowY: 'auto' }}>
-          <div style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative'  }}
+        <div ref={parentRef} style={{ overflowY: 'auto' }}>
+          <div style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative' }}
           className='w-100'>
             {rowVirtualizer.getVirtualItems().map((virtualRow) => {
               const child = children[virtualRow.index];
@@ -78,21 +79,26 @@ const ChildRowsVirtualized = ({ children }) => {
                     transform: `translateY(${virtualRow.start}px)`,
                     width: '100%',
                   }}
+                  onClick={() => {
+                    const cellData = { ...child, name: 'ClickedCellComponent' };
+                    console.log(cellData);
+                    dispatch(addLayer(cellData)); 
+                    onCellClick(cellData); 
+                  }}
                 >
-         
-                        {child.cells.map((cell, idx) => (
-                          <td key={idx} style={{ border: '1px solid black' ,
-                          wordWrap: 'break-word', 
-                          whiteSpace: 'normal',   
-                        }}
-                          className='childCol p-2'>
-                            {cell.value}
-                          </td>
-                        ))}
-                        <td className="w-auto" style={{ border: '1px solid black' }}>
-                          <Actions />
-                        </td>
-
+                  {child.cells.map((cell, idx) => (
+                    <td
+                      key={idx}
+                      style={{ border: '1px solid black', wordWrap: 'break-word', whiteSpace: 'normal' }}
+                      className='childCol p-2'
+                  
+                    >
+                      {cell.value}
+                    </td>
+                  ))}
+                  <td className="w-auto" style={{ border: '1px solid black' }}>
+                    <Actions />
+                  </td>
                 </tr>
               );
             })}
@@ -103,10 +109,9 @@ const ChildRowsVirtualized = ({ children }) => {
   );
 };
 
-
-
 const Card = ({ content }) => {
   const [expandedRows, setExpandedRows] = useState({});
+  const [clickedCell, setClickedCell] = useState(null); 
   const dispatch = useDispatch();
 
   // Toggle expanded state for a row
@@ -116,7 +121,9 @@ const Card = ({ content }) => {
       [rowId]: !prev[rowId],
     }));
   };
-
+  const handleCellClick = (cellData) => {
+    setClickedCell(cellData); 
+  };
   const headers = content.structure.header;
   const groupedHeaders = useMemo(() => groupHeaders(headers), [headers]);
   const groupedRows = useMemo(() => groupRows(content.structure.rows), [content.structure.rows]);
@@ -174,7 +181,7 @@ const Card = ({ content }) => {
               </tr>
 
               {/* Render virtualized child rows if expanded */}
-              {expandedRows[row.id] && <ChildRowsVirtualized children={row.children} />}
+              {expandedRows[row.id] && <ChildRowsVirtualized children={row.children} dispatch={dispatch}   onCellClick={handleCellClick} />}
             </React.Fragment>
           ))}
         </tbody>

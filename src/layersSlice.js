@@ -57,13 +57,14 @@ const layersSlice = createSlice({
       },
     },
     updateLayer: (state, action) => {
-      const { id, width, height } = action.payload;
+      const { id, width, height, cells } = action.payload;
       const index = state.layers.findIndex((layer) => layer.id === id);
       if (index !== -1) {
         state.layers[index] = {
-          ...state.layers[index], // Preserve existing properties
-          width,
-          height,
+          ...state.layers[index],
+          width: width || state.layers[index].width,
+          height: height || state.layers[index].height,
+          cells: cells || state.layers[index].cells,
         };
       }
     },
