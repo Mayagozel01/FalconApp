@@ -1,0 +1,40 @@
+.layout-manager-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #f9f9f9;
+  overflow: hidden;
+}
+
+.draggable-container {
+  position: absolute;
+  display: inline-block;
+  min-width: 100px;
+  height: fit-content;
+}
+
+.handle {
+  background: #ddd;
+  padding: 5px;
+  text-align: center;
+  cursor: move;
+  user-select: none;
+}
+
+.box-content {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+  border: 1px solid #999;
+  display: flex;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.react-resizable-handle {
+  z-index: 2;
+}
+
+.react-resizable {
+  display: inline-block;
+}

@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import AppContext from 'context/Context';
-import googleMapStyles from 'helpers/googleMapStyles';
 import {
-  GoogleMap as ReactGoogleMap,
-  Marker,
   InfoWindow,
+  Marker,
+  GoogleMap as ReactGoogleMap,
   useJsApiLoader
 } from '@react-google-maps/api';
+import AppContext from 'context/Context';
+import googleMapStyles from 'helpers/googleMapStyles';
+import PropTypes from 'prop-types';
+import { useContext, useEffect, useState } from 'react';
 import mapMarker from '../../../src/assets/img/icons/map-marker.png';
 
 const GoogleMap = ({
@@ -19,7 +19,7 @@ const GoogleMap = ({
   ...rest
 }) => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY
+    googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_API_KEY
   });
 
   const {

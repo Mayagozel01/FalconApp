@@ -1,10 +1,15 @@
-import React, { useState, useRef, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { addLayer } from '../layersSlice';
-import { Table, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import {
+  faChevronDown,
+  faChevronRight,
+  faEdit,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import React, { useMemo, useRef, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { addLayout } from "../../widgets/layouts-manager/layoutsSlice";
 
 // Actions component for edit and delete buttons
 const Actions = () => (
@@ -23,7 +28,7 @@ const groupHeaders = (headers) => {
 
   headers.forEach((header) => {
     const { id, parentId } = header;
-    
+
     if (!parentId) {
       // Создаем или обновляем группу для родительского заголовка
       const group = groups.get(id) || { parent: null, children: [] };
@@ -40,7 +45,6 @@ const groupHeaders = (headers) => {
   return Array.from(groups.values());
 };
 
-
 const groupRows = (rows) => {
   const rowMap = new Map();
   rows.forEach((row) => rowMap.set(row.id, { ...row, children: [] }));
@@ -56,7 +60,7 @@ const ChildRowsVirtualized = ({ children, dispatch, onCellClick }) => {
   const parentRef = useRef(null);
 
   const rowVirtualizer = useVirtualizer({
-    count: children.length, 
+    count: children.length,
     estimateSize: () => 60, // Estimated height of each row
     getScrollElement: () => parentRef.current,
     overscan: 15, // Number of rows to render outside the visible area
@@ -64,39 +68,50 @@ const ChildRowsVirtualized = ({ children, dispatch, onCellClick }) => {
 
   return (
     <tr>
-      <td colSpan="100%" className='m-0 p-0 '>
-        <div ref={parentRef} style={{ overflowY: 'auto' }}>
-          <div style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative' }}
-          className='w-100'>
+      <td
+        //colSpan="100%"
+        className="m-0 p-0 "
+      >
+        <div ref={parentRef}>
+          <div
+            style={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              position: "relative",
+            }}
+            className="w-100"
+          >
             {rowVirtualizer.getVirtualItems().map((virtualRow) => {
               const child = children[virtualRow.index];
               return (
                 <tr
                   key={child.id}
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     transform: `translateY(${virtualRow.start}px)`,
-                    width: '100%',
+                    width: "100%",
                   }}
                   onClick={() => {
-                    const cellData = { ...child, name: 'ClickedCellComponent' };
+                    const cellData = { ...child, name: "ClickedCellComponent" };
                     console.log(cellData);
-                    dispatch(addLayer(cellData)); 
-                    onCellClick(cellData); 
+                    dispatch(addLayout(cellData));
+                    onCellClick(cellData);
                   }}
                 >
                   {child.cells.map((cell, idx) => (
                     <td
                       key={idx}
-                      style={{ border: '1px solid black', wordWrap: 'break-word', whiteSpace: 'normal' }}
-                      className='childCol p-2'
-                  
+                      style={{
+                        border: "1px solid black",
+                        wordWrap: "break-word",
+                        whiteSpace: "normal",
+                      }}
+                      className="childCol p-2"
                     >
                       {cell.value}
                     </td>
                   ))}
-                  <td className="w-auto" style={{ border: '1px solid black' }}>
+                  <td className="w-auto" style={{ border: "1px solid black" }}>
                     <Actions />
                   </td>
                 </tr>
@@ -111,7 +126,7 @@ const ChildRowsVirtualized = ({ children, dispatch, onCellClick }) => {
 
 const Card = ({ content }) => {
   const [expandedRows, setExpandedRows] = useState({});
-  const [clickedCell, setClickedCell] = useState(null); 
+  const [clickedCell, setClickedCell] = useState(null);
   const dispatch = useDispatch();
 
   // Toggle expanded state for a row
@@ -122,56 +137,71 @@ const Card = ({ content }) => {
     }));
   };
   const handleCellClick = (cellData) => {
-    setClickedCell(cellData); 
+    setClickedCell(cellData);
   };
   const headers = content.structure.header;
   const groupedHeaders = useMemo(() => groupHeaders(headers), [headers]);
-  const groupedRows = useMemo(() => groupRows(content.structure.rows), [content.structure.rows]);
+  const groupedRows = useMemo(
+    () => groupRows(content.structure.rows),
+    [content.structure.rows]
+  );
 
   return (
-    <div style={{ width: '100%', height: 'auto' }}>
+    <div style={{ width: "100%", height: "auto" }}>
       <h3>{content.structure.tableName}</h3>
-      <table hover bordered responsive style={{ border: '1px solid black', width: '100%' }}>
-      <thead>
-  <tr>
-    {groupedHeaders.map((group, index) => (
-      <th
-        key={`parent-${index}`}
-        colSpan={group.children.length || 1}
-        rowSpan={group.children.length === 0 ? 2 : 1} 
-        className={`text-center m-0 p-0`}
-        style={{ border: '1px solid black' }}
+      <table
+        //hover
+        //bordered
+        //responsive
+        style={{ border: "1px solid black", width: "100%" }}
       >
-        {group.parent?.title || 'No Parent'}
-      </th>
-    ))}
-  </tr>
-  {groupedHeaders.some(group => group.children.length > 0) && ( 
-    <tr>
-      {groupedHeaders.map((group) =>
-        group.children.length > 0
-          ? group.children.map((child) => (
+        <thead>
+          <tr>
+            {groupedHeaders.map((group, index) => (
               <th
-                key={`child-${child.id}`}
-                className="text-center childCol"
-                style={{ border: '1px solid black' }}
+                key={`parent-${index}`}
+                colSpan={group.children.length || 1}
+                rowSpan={group.children.length === 0 ? 2 : 1}
+                className={`text-center m-0 p-0`}
+                style={{ border: "1px solid black" }}
               >
-                {child.title}
+                {group.parent?.title || "No Parent"}
               </th>
-            ))
-          : null 
-      )}
-    </tr>
-  )}
-</thead>
+            ))}
+          </tr>
+          {groupedHeaders.some((group) => group.children.length > 0) && (
+            <tr>
+              {groupedHeaders.map((group) =>
+                group.children.length > 0
+                  ? group.children.map((child) => (
+                      <th
+                        key={`child-${child.id}`}
+                        className="text-center childCol"
+                        style={{ border: "1px solid black" }}
+                      >
+                        {child.title}
+                      </th>
+                    ))
+                  : null
+              )}
+            </tr>
+          )}
+        </thead>
         <tbody>
           {groupedRows.map((row) => (
             <React.Fragment key={row.id}>
               {/* Render parent row */}
               <tr>
-                <td colSpan={groupedHeaders.length} onClick={() => toggleExpanded(row.id)}>
+                <td
+                  colSpan={groupedHeaders.length}
+                  onClick={() => toggleExpanded(row.id)}
+                >
                   {row.children.length > 0 && (
-                    <FontAwesomeIcon icon={expandedRows[row.id] ? faChevronDown : faChevronRight} />
+                    <FontAwesomeIcon
+                      icon={
+                        expandedRows[row.id] ? faChevronDown : faChevronRight
+                      }
+                    />
                   )}
                   {row.cells[0].value}
                 </td>
@@ -181,19 +211,26 @@ const Card = ({ content }) => {
               </tr>
 
               {/* Render virtualized child rows if expanded */}
-              {expandedRows[row.id] && <ChildRowsVirtualized children={row.children} dispatch={dispatch}   onCellClick={handleCellClick} />}
+              {expandedRows[row.id] && (
+                <ChildRowsVirtualized
+                  children={row.children}
+                  dispatch={dispatch}
+                  onCellClick={handleCellClick}
+                />
+              )}
             </React.Fragment>
           ))}
         </tbody>
       </table>
 
       <div className="d-flex justify-content-between mt-2">
-        <button onClick={() => dispatch(addLayer(content))} className="btn btn-primary">
+        <button
+          onClick={() => dispatch(addLayout(content))}
+          className="btn btn-primary"
+        >
           Duplicate
         </button>
-        <button className="btn btn-secondary">
-          Add 2 Rows
-        </button>
+        <button className="btn btn-secondary">Add 2 Rows</button>
       </div>
     </div>
   );

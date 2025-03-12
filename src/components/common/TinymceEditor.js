@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
+import classNames from 'classnames';
 import AppContext from 'context/Context';
 import { getColor } from 'helpers/utils';
-import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { useContext, useEffect, useRef } from 'react';
 
 const TinymceEditor = ({ value, handleChange, height = '50vh', isInvalid }) => {
   const {
@@ -25,7 +25,7 @@ const TinymceEditor = ({ value, handleChange, height = '50vh', isInvalid }) => {
         onInit={(evt, editor) => (editorRef.current = editor)}
         value={value}
         onEditorChange={handleChange}
-        apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
+        apiKey={import.meta.env.VITE_APP_TINYMCE_APIKEY}
         init={{
           height,
           body_class: 'my_class',
