@@ -3,6 +3,30 @@
   "name": "falcon-react",
   "version": "4.2.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
+    "deploy": "echo https://falconreact.prium.me > ./build/CNAME && gh-pages -d build",
+    "deploy:beta": "echo frlive.prium.me > ./build/CNAME && gh-pages -d build -r git@github.com:prium/falcon-react-alpha2.git",
+    "deploy:eighteen": "echo falconreact18.prium.me > ./build/CNAME && gh-pages -d build -r git@github.com:prium/falcon-react18.git",
+    "build:css": "webpack --config webpack.config.js",
+    "watch:css": "webpack --config webpack.config.js --watch"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
     "@emoji-mart/react": "^1.0.1",
@@ -30,6 +54,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@tinymce/tinymce-react": "^4.3.0",
+    "@types/react-resizable": "^3.0.8",
     "bootstrap": "^5.2.2",
     "chart.js": "^4.0.1",
     "classnames": "^2.3.1",
@@ -73,7 +98,6 @@
     "react-resizable-panels": "^2.1.7",
     "react-router-dom": "^7.1.1",
     "react-router-hash-link": "^2.4.3",
-    "react-scripts": "^5.0.1",
     "react-select": "^5.7.0",
     "react-simple-typewriter": "^5.0.1",
     "react-slick": "^0.29.0",
@@ -91,42 +115,31 @@
     "web-vitals": "^3.3.2",
     "yup": "^1.1.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
-    "deploy": "echo https://falconreact.prium.me > ./build/CNAME && gh-pages -d build",
-    "deploy:beta": "echo frlive.prium.me > ./build/CNAME && gh-pages -d build -r git@github.com:prium/falcon-react-alpha2.git",
-    "deploy:eighteen": "echo falconreact18.prium.me > ./build/CNAME && gh-pages -d build -r git@github.com:prium/falcon-react18.git",
-    "build:css": "webpack --config webpack.config.js",
-    "watch:css": "webpack --config webpack.config.js --watch"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "@automattic/webpack-rtl-plugin": "^6.0.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^6.7.3",
-    "eslint": "^8.41.0",
+    "eslint": "^9.21.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
     "gh-pages": "^5.0.0",
+    "globals": "^15.15.0",
     "mini-css-extract-plugin": "^0.11.3",
     "prettier": "^2.3.2",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0",
+    "vite-plugin-clean": "^2.0.1",
+    "vite-tsconfig-paths": "^5.1.4",
     "webpack": "^5.82.1",
     "webpack-cli": "^5.1.1",
     "webpack-fix-style-only-entries": "^0.6.1"

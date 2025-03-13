@@ -9,13 +9,13 @@ const useToggleStylesheet = (isRTL, isDark, configDispatch) => {
       link => link.remove()
     );
     const link = document.createElement('link');
-    link.href = `${process.env.PUBLIC_URL}/css/theme${isRTL ? '.rtl' : ''}.css`;
+    link.href = `${import.meta.env.VITE_PUBLIC_URL}/css/theme${isRTL ? '.rtl' : ''}.css`;
     link.type = 'text/css';
     link.rel = 'stylesheet';
     link.className = 'theme-stylesheet';
 
     const userLink = document.createElement('link');
-    userLink.href = `${process.env.PUBLIC_URL}/css/user${
+    userLink.href = `${import.meta.env.VITE_PUBLIC_URL}/css/user${
       isRTL ? '.rtl' : ''
     }.css`;
     userLink.type = 'text/css';

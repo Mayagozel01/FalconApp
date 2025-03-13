@@ -1,0 +1,5 @@
+node_modules
+build
+.dockerignore
+docker/development/Dockerfile
+docker/production/Dockerfile
