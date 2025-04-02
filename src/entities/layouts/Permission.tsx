@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import { addLayout } from "../../widgets/layouts-manager/layoutsSlice";
 

@@ -56,7 +56,7 @@ const groupRows = (rows) => {
   return Array.from(rowMap.values()).filter((row) => !row.parentId);
 };
 
-const ChildRowsVirtualized = ({ children, dispatch, onCellClick }) => {
+const ChildRowsVirtualized = ({ children, dispatch, onCellClick, headers }) => {
   const parentRef = useRef(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -92,7 +92,7 @@ const ChildRowsVirtualized = ({ children, dispatch, onCellClick }) => {
                     width: "100%",
                   }}
                   onClick={() => {
-                    const cellData = { ...child, name: "ClickedCellComponent" };
+                    const cellData = { ...child, name: "ClickedCellComponent", headers };
                     console.log(cellData);
                     dispatch(addLayout(cellData));
                     onCellClick(cellData);
@@ -137,7 +137,9 @@ const Card = ({ content }) => {
     }));
   };
   const handleCellClick = (cellData) => {
-    setClickedCell(cellData);
+    setClickedCell({
+    ...cellData,
+    headers})
   };
   const headers = content.structure.header;
   const groupedHeaders = useMemo(() => groupHeaders(headers), [headers]);
@@ -216,6 +218,7 @@ const Card = ({ content }) => {
                   children={row.children}
                   dispatch={dispatch}
                   onCellClick={handleCellClick}
+                  headers={headers}
                 />
               )}
             </React.Fragment>

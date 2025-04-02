@@ -43,29 +43,28 @@ export const LayoutContainer = ({ layout, index }: LayoutProps) => {
 
   return (
     <Draggable handle=".handle" key={layout.id}>
-      <div style={{ display: "inline-block" }}>
-        <div className="handle"></div>
-        <Resizable
-          width={layout.width || 200}
-          height={layout.height || 900}
-          onResize={onResizeHandler}
-          resizeHandles={["s", "e", "w", "n"]}
-        >
-          <div
-            style={{
-              width: `${layout.width || 900}px`,
-              height: `${layout.height || 900}px`,
-              border: "1px solid black",
-              padding: "20px",
-              boxSizing: "border-box",
-            }}
-          >
-            <Suspense fallback={<div>Loading...</div>}>
-              <LayoutComponent {...layout} />
-            </Suspense>
-          </div>
-        </Resizable>
+    <div style={{ display: "inline-block" }}>
+      <div className="handle" style={{ padding: "10px", backgroundColor: "lightgray", cursor: "move" }}>
       </div>
-    </Draggable>
+      <Resizable
+        width={layout.width || 200}
+        height={layout.height || 900}
+        onResize={onResizeHandler}
+        resizeHandles={["s", "e", "w", "n"]}
+      >
+        <div
+          className="draggable-resizable-container"
+          style={{
+            width: `${layout.width || 900}px`,
+            height: `${layout.height || 900}px`,
+          }}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <LayoutComponent {...layout} />
+          </Suspense>
+        </div>
+      </Resizable>
+    </div>
+  </Draggable>
   );
 };
