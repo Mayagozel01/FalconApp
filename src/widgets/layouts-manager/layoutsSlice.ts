@@ -9,7 +9,6 @@ const initialState = {
       width: layout.width, // Set default width
       height: layout.height, // Set default height
     })) || [],
-    isActive: false || [],
   loading: false,
   error: null,
 };
@@ -19,6 +18,7 @@ function generateNumericId() {
     return nanoid();
   } catch (error) {
     console.error("Error generating numeric ID:", error);
+    // Fallback to a timestamp to ensure uniqueness
     return `${Date.now()}-${Math.random()}`;
   }
 }
@@ -53,7 +53,6 @@ const layoutsSlice = createSlice({
             y: (originalLayout.y || 0) + 20, // Optional: Set default y position
             width: originalLayout.width || 100, // Set default width
             height: originalLayout.height || 100, // Set default height
-            isActive: false, 
           },
           meta: {},
           error: {},
@@ -77,20 +76,6 @@ const layoutsSlice = createSlice({
         (layout) => layout.id !== action.payload
       );
     },
-    toggleLayoutActive: (state, action: { payload: string }) => {
-      const activeId = action.payload;
-
-     
-      state.layouts.forEach((layout) => {
-        layout.isActive = false;
-      });
-
-      
-      const activeLayout = state.layouts.find((layout) => layout.id === activeId);
-      if (activeLayout) {
-        activeLayout.isActive = true;
-      }
-    },
   },
 });
 
@@ -101,6 +86,5 @@ export const {
   addLayout,
   updateLayout,
   deleteLayout,
-  toggleLayoutActive,
 } = layoutsSlice.actions;
 export default layoutsSlice.reducer;

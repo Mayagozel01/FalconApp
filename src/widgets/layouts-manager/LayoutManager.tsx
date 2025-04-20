@@ -11,7 +11,14 @@ export const LayoutManager = () => {
   }
 
   return (
-    <div style={{display:'flex'}}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "20px",
+        padding: "20px",
+      }}
+    >
       {layouts.map((layout, index) => (
         <LayoutContainer layout={layout} index={index} />
       ))}

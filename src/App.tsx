@@ -1,4 +1,3 @@
-import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Provider } from "react-redux";
 import "react-toastify/dist/ReactToastify.min.css";

@@ -1,37 +1,25 @@
-import React from "react";
 import { useDispatch } from "react-redux";
-import { Card, Button } from "react-bootstrap";
 import { addLayout } from "../../widgets/layouts-manager/layoutsSlice";
 
-const Permission = ({ title, content, ...rest }) => {
+const Permission = ({ ...rest }) => {
   const dispatch = useDispatch();
-
+  console.log(rest);
   const handleDuplicate = () => {
-    dispatch(addLayout({ title, content, ...rest }));
+    dispatch(addLayout(rest)); // Создаем копию props перед отправкой
   };
-
-  if (!content?.structure?.rows?.length) {
-    return <div className="text-muted p-3">No permission data available</div>;
-  }
-
+  console.log("Permission props:", rest);
   return (
-    <Card className="p-4">
-      <h3 className="mb-4">{title?.value || "Permission"}</h3>
-      <div className="p-3 shadow-sm">
-        {content.structure.rows.map((row) => (
-          <div
-            key={row.id}
-            className="border-bottom py-2 d-flex flex-wrap align-items-center"
-          >
-            {row.cells.map((cell, idx) => (
-              <span key={idx} className="me-3 text-dark">
-                {cell?.value}
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </Card>
+    <div>
+      <h3>{rest.title?.value}</h3>
+      {rest.content?.structure.rows?.map((row) => (
+        <div key={row.id}>
+          {row.cells.map((cell, index) => (
+            <span key={index}>{cell?.value} </span>
+          ))}
+        </div>
+      ))}
+      <button onClick={handleDuplicate}>Duplicate</button>
+    </div>
   );
 };
 

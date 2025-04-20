@@ -1,8 +1,7 @@
 import { Layout } from "entities/layouts/types/layout";
 
 export type UILayout = Layout & {
-  id: string;
-  
+  id: number;
   width: number;
   height: number;
   x: number;

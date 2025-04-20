@@ -1,6 +1,6 @@
 import { Button } from "./button";
 
-export type Header = {
+type Header = {
   // id заголовка для строк
   id: string | number;
   // текст заголовка
@@ -70,9 +70,7 @@ export type Header = {
     buttons?: Array<Button> | null;
     // Подсказка
     clue: string | null;
-
   };
-  
   // Ссылка или Http запрос для всех ячеек столбца,если тип ячейки подразумевает выбор, то выполняется при нахождениислоя в режиме просмотра(Layout.isEdit:false)
   action?: // URL если передан body выполняет как Http запрос,
   // в инном случае обычная ссылка (например в списке оборачивает в тег a)
@@ -135,16 +133,12 @@ type DirectoryConnection = {
     keys?: string[] | string;
   };
 };
-export interface CellState {
-  isAllowed?: boolean;
-  veracity?: boolean | null;
-}
-export type Cell = {
+
+type Cell = {
   // id в бд
-  id: string|number;
+  id: string;
   // id столбца, привязан к header
   header_id: string;
-  headerId: string | number;
   /* Порядок ячейки. Если строка принадлежит панели, то будет массивом 
     в порядке, Основное, Избранное, Техническое
     */
@@ -154,7 +148,12 @@ export type Cell = {
   // иконка
   icon: null | "url";
   // состояние ячейки
-  state?: CellState;
+  state?: {
+    // Доступность ячейки для редактирования
+    isAllowed?: boolean;
+    // Достоверность ячейки
+    veracity?: boolean | null;
+  };
   // Примечание
   note?: string | null;
   // Ссылка или Http запрос для ячейки. Приоритет выше аналога для столбца и строки. Если тип ячейки подразумевает выбор, то выполняется при нахождениислоя в режиме просмотра(Layout.isEdit:false)
@@ -174,18 +173,12 @@ export type Cell = {
    * DirectoryConnection - Ссылка на справочник из которого берутся данные
    * string - Строка
    */
-  value: Array<string> | DirectoryConnection | string | undefined | number;
+  value: Array<string> | DirectoryConnection | string | undefined;
   // для единиц измерения данные приходят в отдельном свойстве
   // * Ссылка на справочник "Единиц измерения" для значения ячейки
   units?: DirectoryConnection;
-  headers: Array<{
-    id: string;
-    title: string;
-    parentId?: string;
-  }>;
-  selectedCellId: string | null;
 };
-export type Row = {
+type Row = {
   //id строки из бд
   id?: string | number;
   // При загрузке из excel значение, true - новая строка, нужна добавить в бд
@@ -236,7 +229,6 @@ export type Row = {
   //Количестов ячеек может быть меньше количества элементов в хеторе, например таблица в первой строке "Доступ" шириной в 2 столбца, во второй строке "Логин" и "Пароль"
   // В тамом случае header_id будет по ID в хеторе "Логин"
   cells: Array<Cell>;
-  
 };
 
 // Структура по сути своей является таблицей
@@ -325,18 +317,3 @@ export type Layouts = {
   // порядок слоев
   layoutsOrder: Array<Layout>;
 };
-export interface HeaderLabel {
-  id: string | number;
-  title: string;
-  dataType?: 'text' | 'number' | 'date' | 'select';
-}
-
-export interface CellsState {
-  rows: Row[];
-  headers: Array<{
-    id: string;
-    title: string;
-    parentId?: string;
-  }>;
-  selectedCellId: string | null;
-}

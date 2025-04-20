@@ -1,63 +1,17 @@
-import React, { useReducer } from "react";
-import { settings } from "./config";
-import AppContext from "./context/Context";
-import { getColor, getItemFromStore } from "./helpers/utils";
-import useToggleStyle from "./hooks/useToggleStyle";
-import { Chart as ChartJS, registerables } from "chart.js";
+// Main.js
+import { settings } from "config";
+import AppContext from "context/Context";
+import { getColor, getItemFromStore } from "helpers/utils";
+import useToggleStyle from "hooks/useToggleStyle";
+import PropTypes from "prop-types";
+import { useReducer } from "react";
+import { configReducer } from "reducers/configReducer";
 
+import { Chart as ChartJS, registerables } from "chart.js";
 ChartJS.register(...registerables);
 
-interface ConfigState {
-  isFluid: boolean;
-  isRTL: boolean;
-  isDark: boolean;
-  navbarPosition: string;
-  disabledNavbarPosition: string[];
-  isNavbarVerticalCollapsed: boolean;
-  navbarStyle: string;
-  currency: string;
-  showBurgerMenu: boolean;
-  showSettingPanel: boolean;
-  navbarCollapsed: boolean;
-}
-
-interface MainProps {
-  children: React.ReactNode;
-}
-
-enum ActionTypes {
-  SET_CONFIG = "SET_CONFIG",
-}
-
-interface ConfigAction {
-  type: ActionTypes;
-  payload: {
-    key: keyof ConfigState;
-    value: any;
-    setInStore: boolean;
-  };
-}
-
-
-const configReducer = (state: ConfigState, action: ConfigAction): ConfigState => {
-  switch (action.type) {
-    case ActionTypes.SET_CONFIG:
-      return {
-        ...state,
-        [action.payload.key]: action.payload.value,
-      };
-    default:
-      return state;
-  }
-};
-
-interface AppContextValue extends ConfigState {
-  setConfig: (key: keyof ConfigState, value: any) => void;
-  configDispatch: React.Dispatch<ConfigAction>;
-}
-
-const Main: React.FC<MainProps> = ({ children }) => {
-  const configState: ConfigState = {
+const Main = (props) => {
+  const configState = {
     isFluid: getItemFromStore("isFluid", settings.isFluid),
     isRTL: getItemFromStore("isRTL", settings.isRTL),
     isDark: getItemFromStore("isDark", settings.isDark),
@@ -74,15 +28,17 @@ const Main: React.FC<MainProps> = ({ children }) => {
     navbarCollapsed: false,
   };
 
-
   const [config, configDispatch] = useReducer(configReducer, configState);
 
-  const { isLoaded } = useToggleStyle(config.isRTL, config.isDark, configDispatch);
+  const { isLoaded } = useToggleStyle(
+    config.isRTL,
+    config.isDark,
+    configDispatch
+  );
 
-
-  const setConfig = (key: keyof ConfigState, value: any) => {
+  const setConfig = (key, value) => {
     configDispatch({
-      type: ActionTypes.SET_CONFIG,
+      type: "SET_CONFIG",
       payload: {
         key,
         value,
@@ -98,32 +54,27 @@ const Main: React.FC<MainProps> = ({ children }) => {
     });
   };
 
-
   if (!isLoaded) {
-    const loadingStyle: React.CSSProperties = {
-      position: "fixed",
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      backgroundColor: config.isDark ? getColor("dark") : getColor("light"),
-    };
-
-    return <div style={loadingStyle} />;
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          backgroundColor: config.isDark ? getColor("dark") : getColor("light"),
+        }}
+      />
+    );
   }
-
- 
-  const contextValue: AppContextValue = {
-    ...config,
-    setConfig,
-    configDispatch,
-  };
-
   return (
-    <AppContext.Provider value={contextValue}>
-      {children}
+    <AppContext.Provider value={{ setConfig, configDispatch, ...config }}>
+      {props.children}
     </AppContext.Provider>
   );
 };
+
+Main.propTypes = { children: PropTypes.node };
 
 export default Main;
