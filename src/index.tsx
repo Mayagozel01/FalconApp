@@ -1,3 +1,4 @@
+import React from "react";
 import "helpers/initFA.ts";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
