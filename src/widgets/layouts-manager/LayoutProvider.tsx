@@ -1,15 +1,14 @@
-import PropTypes from "prop-types";
 import React from "react";
 
 export const LayoutContext = React.createContext(null);
 
-export const LayoutProvider = ({ users, children }) => {
+type LayoutProviderProps = {
+  users: any;
+  children: React.ReactNode;
+};
+
+export const LayoutProvider = ({ users, children }: LayoutProviderProps) => {
   return (
     <LayoutContext.Provider value={users}>{children}</LayoutContext.Provider>
   );
-};
-
-LayoutProvider.propTypes = {
-  users: PropTypes.object.isRequired,
-  children: PropTypes.node.isRequired,
 };

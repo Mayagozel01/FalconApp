@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Card, Tab, Row, Col, Nav, Button } from 'react-bootstrap';
-import FalconCardBody from './FalconCardBody';
-import classNames from 'classnames';
-import { HashLink } from 'react-router-hash-link';
-import Flex from './Flex';
-import { useLocation } from 'react-router-dom';
-import { camelize } from '../../helpers/utils';
-import AppContext from 'context/Context';
+import classNames from "classnames";
+import AppContext from "context/Context";
+import { HTMLAttributes, ReactNode, useContext } from "react";
+import { Button, Card, Col, Nav, Row, Tab } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+import { camelize } from "../../helpers/utils";
+import FalconCardBody from "./FalconCardBody";
+import Flex from "./Flex";
 
+// Компонент без пропсов
 const PreviewCode = () => {
   return (
     <Row className="d-inline-block">
@@ -30,23 +30,30 @@ const PreviewCode = () => {
   );
 };
 
+interface FalconComponentCardHeaderProps {
+  light?: boolean;
+  className?: string;
+  title?: string;
+  children?: ReactNode;
+  noPreview?: boolean;
+}
+
 const FalconComponentCardHeader = ({
   light,
   className,
   title,
   children,
-  noPreview
-}) => {
+  noPreview,
+}: FalconComponentCardHeaderProps) => {
   const location = useLocation();
-  const {
-    config: { isRTL }
-  } = useContext(AppContext);
+  const { isRTL } = useContext(AppContext);
+
   return (
-    <Card.Header className={classNames({ 'bg-light': light }, className)}>
+    <Card.Header className={classNames({ "bg-light": light }, className)}>
       <Row
-        className={classNames('g-2', {
-          'align-items-center': !children,
-          'align-items-end ': children
+        className={classNames("g-2", {
+          "align-items-center": !children,
+          "align-items-end ": children,
         })}
       >
         <Col>
@@ -61,7 +68,7 @@ const FalconComponentCardHeader = ({
                     <HashLink
                       to={`${location.pathname}#${camelize(title)}`}
                       className="hover-actions ps-2"
-                      style={{ top: 0, left: '-25px' }}
+                      style={{ top: 0, left: "-25px" }}
                     >
                       #
                     </HashLink>
@@ -73,7 +80,7 @@ const FalconComponentCardHeader = ({
                     <HashLink
                       to={`${location.pathname}#${camelize(title)}`}
                       className="hover-actions ps-2"
-                      style={{ top: 0, right: '-25px' }}
+                      style={{ top: 0, right: "-25px" }}
                     >
                       #
                     </HashLink>
@@ -87,8 +94,8 @@ const FalconComponentCardHeader = ({
         {!noPreview && (
           <Col
             className={classNames({
-              'col-auto': !children,
-              'col-md-auto col-12': children
+              "col-auto": !children,
+              "col-md-auto col-12": children,
             })}
           >
             <PreviewCode />
@@ -99,14 +106,20 @@ const FalconComponentCardHeader = ({
   );
 };
 
+interface FalconComponentCardProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+  multiSections?: boolean;
+  noGuttersBottom?: boolean;
+}
+
 const FalconComponentCard = ({
   children,
   multiSections,
   noGuttersBottom,
   ...rest
-}) => {
+}: FalconComponentCardProps) => {
   return (
-    <Card className={classNames({ 'mb-3': !noGuttersBottom })} {...rest}>
+    <Card className={classNames({ "mb-3": !noGuttersBottom })} {...rest}>
       {multiSections ? (
         <>{children}</>
       ) : (
@@ -118,19 +131,5 @@ const FalconComponentCard = ({
 
 FalconComponentCard.Header = FalconComponentCardHeader;
 FalconComponentCard.Body = FalconCardBody;
-
-FalconComponentCard.propTypes = {
-  children: PropTypes.node,
-  multiSections: PropTypes.bool,
-  noGuttersBottom: PropTypes.bool
-};
-
-FalconComponentCardHeader.propTypes = {
-  light: PropTypes.bool,
-  className: PropTypes.string,
-  title: PropTypes.string,
-  children: PropTypes.node,
-  noPreview: PropTypes.bool
-};
 
 export default FalconComponentCard;

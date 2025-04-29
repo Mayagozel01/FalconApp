@@ -1,3 +1,4 @@
+import { Button, Col, Container, Navbar, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addLayout } from "../../widgets/layouts-manager/layoutsSlice";
 

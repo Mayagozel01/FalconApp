@@ -1,3 +1,7 @@
+.app {
+  overflow: hidden;
+}
+
 .layoutManager {
   display: flex;
   flex-wrap: wrap;
@@ -5,7 +9,7 @@
   padding: 20px;
 }
 .childCol {
-  width: 150px; /* Adjust this value as needed */
+  width: 150px;
   min-width: 150px;
   max-width: 150px;
   text-align: center;

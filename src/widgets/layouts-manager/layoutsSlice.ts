@@ -8,7 +8,10 @@ const initialState = {
       id: generateNumericId(),
       width: layout.width, // Set default width
       height: layout.height, // Set default height
+      x: layout?.x || 50,
+      y: layout?.y || 50,
     })) || [],
+  isActive: false || [],
   loading: false,
   error: null,
 };
@@ -53,6 +56,7 @@ const layoutsSlice = createSlice({
             y: (originalLayout.y || 0) + 20, // Optional: Set default y position
             width: originalLayout.width || 100, // Set default width
             height: originalLayout.height || 100, // Set default height
+            isActive: false,
           },
           meta: {},
           error: {},
@@ -75,6 +79,20 @@ const layoutsSlice = createSlice({
       state.layouts = state.layouts.filter(
         (layout) => layout.id !== action.payload
       );
+    },
+    toggleLayoutActive: (state, action: { payload: string }) => {
+      const activeId = action.payload;
+
+      state.layouts.forEach((layout) => {
+        layout.isActive = false;
+      });
+
+      const activeLayout = state.layouts.find(
+        (layout) => layout.id === activeId
+      );
+      if (activeLayout) {
+        activeLayout.isActive = true;
+      }
     },
   },
 });

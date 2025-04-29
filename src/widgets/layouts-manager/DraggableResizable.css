@@ -2,7 +2,6 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #f9f9f9;
   overflow: hidden;
 }
 
@@ -14,7 +13,6 @@
 }
 
 .handle {
-  background: #ddd;
   padding: 5px;
   text-align: center;
   cursor: move;
@@ -24,8 +22,6 @@
 .box-content {
   width: 100%;
   height: 100%;
-  background: #f0f0f0;
-  border: 1px solid #999;
   display: flex;
   overflow: auto;
   box-sizing: border-box;
