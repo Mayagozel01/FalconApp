@@ -1,6 +1,6 @@
 import { Button } from "./button";
 
-type Header = {
+export type Header = {
   // id заголовка для строк
   id: string | number;
   // текст заголовка
@@ -178,7 +178,7 @@ type Cell = {
   // * Ссылка на справочник "Единиц измерения" для значения ячейки
   units?: DirectoryConnection;
 };
-type Row = {
+export type Row = {
   //id строки из бд
   id?: string | number;
   // При загрузке из excel значение, true - новая строка, нужна добавить в бд
