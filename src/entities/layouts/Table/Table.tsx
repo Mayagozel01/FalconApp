@@ -21,13 +21,8 @@ type ChildRowsVirtualizedProps = {
 };
 
 const ChildRowsVirtualized = React.memo(
-  ({
-    rowChildren,
-    dispatch,
-    onCellClick,
-    headers,
-  }: ChildRowsVirtualizedProps) => {
-    const parentRef = useRef(null);
+  ({ rowChildren, dispatch, onCellClick, headers }: ChildRowsVirtualizedProps) => {
+    const parentRef = useRef<HTMLDivElement>(null);
 
     const rowVirtualizer = useVirtualizer({
       count: rowChildren.length,
@@ -46,46 +41,67 @@ const ChildRowsVirtualized = React.memo(
     );
 
     return (
-      <tbody ref={parentRef} className="virtualized-tbody">
+      <tr>
+        <td colSpan={headers.length} style={{ padding: 0 }}>
         <div
+  ref={parentRef}
+  style={{
+    maxHeight: "240px", 
+    overflowY: "auto",
+    position: "relative",
+    margin: "0",
+    padding: "0",
+  }}
+  className="scroll-container"
+>
+  <div 
+    style={{
+      height: `${rowVirtualizer.getTotalSize()}px`,
+      position: "relative",
+    }}
+  >
+    {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+      const child = rowChildren[virtualRow.index];
+      return (
+        <div
+          key={child.id}
           style={{
-            height: `${rowVirtualizer.getTotalSize()}px`,
-            position: "relative",
+            position: "absolute",
+            top: 0,
+            transform: `translateY(${virtualRow.start}px)`,
+            display: "table",
+            tableLayout: "fixed",
+            width: "100%",
+            height: `${virtualRow.size}px`, 
+            margin: 0,
+            padding: 0,
           }}
-          className="w-100"
         >
-          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-            const child = rowChildren[virtualRow.index];
-            return (
-              <tr
-                key={child.id}
+          <div style={{ display: "table-row" }}>
+            {child.cells.map((cell, idx) => (
+              <div
+                key={idx}
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  transform: `translateY(${virtualRow.start}px)`,
-                  width: "100%",
+                  display: "table-cell",
+                  paddingTop: "8px",
+                  border: "1px solid #edf2f9",
+                  whiteSpace: "normal",
+                  boxSizing: "border-box",
                 }}
-                onClick={() => handleChildRowClick(child)}
-                className="virtual-row"
+                className="text-center"
               >
-                {child.cells.map((cell, idx) => (
-                  <td
-                    key={idx}
-                    style={{
-                      border: "1px solid black",
-                      wordWrap: "break-word",
-                      whiteSpace: "normal",
-                    }}
-                    className="childCol p-2"
-                  >
-                    {String(cell.value)}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
+                {String(cell.value)}
+              </div>
+            ))}
+          </div>
         </div>
-      </tbody>
+      );
+    })}
+  </div>
+</div>
+
+        </td>
+      </tr>
     );
   }
 );
@@ -127,7 +143,6 @@ const Table = ({ content }: TableProps) => {
     <div style={{ width: "100%", height: "auto" }}>
       <BTable bordered responsive>
         <TableHeader groupedHeaders={groupedHeaders} />
-        <tbody>
           {groupedRows.map((row) => (
             <React.Fragment key={row.id}>
               <TableParentRow
@@ -146,7 +161,6 @@ const Table = ({ content }: TableProps) => {
               )}
             </React.Fragment>
           ))}
-        </tbody>
       </BTable>
     </div>
   );
